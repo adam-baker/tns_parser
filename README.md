@@ -15,11 +15,18 @@ package main
 
 import (
   "fmt"
+
+
   "github.com/adam-baker/tns_parser"
 )
 
 func main() {
-  tns := tns_parser.NewTNSParser("/path/to/tnsnames.ora")
-  fmt.Println(tns.Get("DB_NAME"))
+  input := "(YOUR TNSNAMES.Ora CONTENT HERE)"
+  tnsFile, err := tnsparser.ParseTNSString(input)
+  if err != nil {
+      fmt.Println("Error:", err)
+      return
+  }
+  fmt.Println("Parsed TNSFile:", tnsFile)
 }
 ```
