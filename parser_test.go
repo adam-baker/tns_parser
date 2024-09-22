@@ -9,7 +9,7 @@ import (
 )
 
 func TestParseValidConfigurations(t *testing.T) {
-    testFiles, err := filepath.Glob("testdata/valid/*.tns")
+    testFiles, err := filepath.Glob("testdata/valid/*.ora")
     if err != nil {
         t.Fatalf("Failed to list test files: %v", err)
     }
@@ -27,7 +27,7 @@ func TestParseValidConfigurations(t *testing.T) {
 
             // You can perform further assertions based on expected data
             // For example, check the service name
-            expectedServiceName := filepath.Base(testFile) // or derive from test file name
+            expectedServiceName := filepath.Base("TESTDB") // or derive from test file name
             entry := tnsFile.Entries[0]
             assert.Equal(t, expectedServiceName, entry.Name, "Service name should match file name")
         })
@@ -35,7 +35,7 @@ func TestParseValidConfigurations(t *testing.T) {
 }
 
 func TestParseInvalidSyntax(t *testing.T) {
-    testFiles, err := filepath.Glob("testdata/invalid_syntax/*.tns")
+    testFiles, err := filepath.Glob("testdata/invalid_syntax/*.ora")
     if err != nil {
         t.Fatalf("Failed to list test files: %v", err)
     }

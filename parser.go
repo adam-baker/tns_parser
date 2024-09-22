@@ -79,8 +79,8 @@ type KeyValue struct {
 
 // Value represents a value which can be a nested KeyValue or a string
 type Value struct {
-    String   string    `( @String`
-    KeyValue *KeyValue `| @@ )`
+    String   string     `( @Ident | @String`
+    KeyValue *KeyValue  `| @@ )`
 }
 var parser = participle.MustBuild[TNSFile](
     participle.Lexer(lex),
@@ -133,7 +133,6 @@ func (tnsFile *TNSFile) SearchEntries(pattern string) ([]*Entry, error) {
     return matches, nil
 }
 
-// PrintEntry prints an entry in a readable format
 func PrintEntry(entry *Entry) {
     fmt.Printf("%s =\n", entry.Name)
     printDescription(entry.Description, "  ")
@@ -155,8 +154,8 @@ func printDescription(desc *Description, indent string) {
 
 func printAddress(addr *Address, indent string) {
     fmt.Printf("%s(ADDRESS =\n", indent)
-    for _, param := range addr.Params {
-        printKeyValue(param, indent+"  ")
+    for _, kv := range addr.Params {
+        printKeyValue(kv, indent+"  ")
     }
     fmt.Printf("%s)\n", indent)
 }
@@ -171,18 +170,18 @@ func printAddressList(addrList *AddressList, indent string) {
 
 func printConnectData(connectData *ConnectData, indent string) {
     fmt.Printf("%s(CONNECT_DATA =\n", indent)
-    for _, param := range connectData.Params {
-        printKeyValue(param, indent+"  ")
+    for _, kv := range connectData.Params {
+        printKeyValue(kv, indent+"  ")
     }
     fmt.Printf("%s)\n", indent)
 }
-
 func printKeyValue(kv *KeyValue, indent string) {
-    if kv.Value.String != "" {
-        fmt.Printf("%s(%s = %s)\n", indent, kv.Key, kv.Value.String)
-    } else if kv.Value.KeyValue != nil {
-        fmt.Printf("%s(%s =\n", indent, kv.Key)
-        printKeyValue(kv.Value.KeyValue, indent+"  ")
-        fmt.Printf("%s)\n", indent)
-    }
+	if kv.Value.String != "" {
+		fmt.Printf("%s(%s = %s)\n", indent, kv.Key, kv.Value.String)
+	} else if kv.Value.KeyValue != nil {
+		fmt.Printf("%s(%s =\n", indent, kv.Key)
+		printKeyValue(kv.Value.KeyValue, indent+"  ")
+		fmt.Printf("%s)\n", indent)
+	}
 }
+
