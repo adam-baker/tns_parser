@@ -1,4 +1,4 @@
-module adam-baker/tns_parse
+module github.com/adam-baker/tns_parse
 
 go 1.22.3
 
