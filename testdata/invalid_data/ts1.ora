@@ -1,0 +1,8 @@
+INVALIDDB =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = invaliddb.example.com)(PORT = 1521)
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = invalidservice)
+    )
+  )
